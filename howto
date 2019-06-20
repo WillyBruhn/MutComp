@@ -1,0 +1,15 @@
+you need this folder hierarchy
+        
+Input
+        > pdb: with all your pdb-files
+        > pqr: empty (will later contain your converted pqr-files)
+        
+Output:
+        empty
+        
+
+Afterwards omit the following call from the folder containing Input and Output
+
+    /home/sysgen/Documents/LWB/TCL/Script/./process.sh
+
+the results will be stored in Output

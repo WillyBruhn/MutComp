@@ -1,0 +1,25 @@
+mkdir: das Verzeichnis »/home/willy/RedoxChallenges/MasterThesis/memoliModels/myVmdToys/Output/000_Trx/“ kann nicht angelegt werden: Die Datei existiert bereits
+rlwrap: Command not found.
+/usr/local/vmd/lib/vmd/vmd_LINUXAMD64: /usr/lib/x86_64-linux-gnu/libGL.so.1: no version information available (required by /usr/local/vmd/lib/vmd/vmd_LINUXAMD64)
+mkdir: das Verzeichnis »/home/willy/RedoxChallenges/MasterThesis/memoliModels/myVmdToys/Output/013/“ kann nicht angelegt werden: Die Datei existiert bereits
+rlwrap: Command not found.
+/usr/local/vmd/lib/vmd/vmd_LINUXAMD64: /usr/lib/x86_64-linux-gnu/libGL.so.1: no version information available (required by /usr/local/vmd/lib/vmd/vmd_LINUXAMD64)
+mkdir: das Verzeichnis »/home/willy/RedoxChallenges/MasterThesis/memoliModels/myVmdToys/Output/021/“ kann nicht angelegt werden: Die Datei existiert bereits
+rlwrap: Command not found.
+/usr/local/vmd/lib/vmd/vmd_LINUXAMD64: /usr/lib/x86_64-linux-gnu/libGL.so.1: no version information available (required by /usr/local/vmd/lib/vmd/vmd_LINUXAMD64)
+/home/willy/RedoxChallenges/MutComp/./process.sh: Zeile 346: /home/willy/RedoxChallenges/MasterThesis/memoliModels/myVmdToys/Output000_Trx/000_Trx_pot.dx: Datei oder Verzeichnis nicht gefunden
+cp: Aufruf von stat für '/home/willy/RedoxChallenges/MasterThesis/memoliModels/myVmdToys/Output000_Trx/apbs.in' nicht möglich: Datei oder Verzeichnis nicht gefunden
+/home/willy/RedoxChallenges/MutComp/./process.sh: Zeile 346: /home/willy/RedoxChallenges/MasterThesis/memoliModels/myVmdToys/Output000_Trx/apbsUncorrected.in: Datei oder Verzeichnis nicht gefunden
+rlwrap: Command not found.
+/usr/local/vmd/lib/vmd/vmd_LINUXAMD64: /usr/lib/x86_64-linux-gnu/libGL.so.1: no version information available (required by /usr/local/vmd/lib/vmd/vmd_LINUXAMD64)
+/home/willy/RedoxChallenges/MutComp/./process.sh: Zeile 346: /home/willy/RedoxChallenges/MasterThesis/memoliModels/myVmdToys/Output013/013_pot.dx: Datei oder Verzeichnis nicht gefunden
+cp: Aufruf von stat für '/home/willy/RedoxChallenges/MasterThesis/memoliModels/myVmdToys/Output013/apbs.in' nicht möglich: Datei oder Verzeichnis nicht gefunden
+/home/willy/RedoxChallenges/MutComp/./process.sh: Zeile 346: /home/willy/RedoxChallenges/MasterThesis/memoliModels/myVmdToys/Output013/apbsUncorrected.in: Datei oder Verzeichnis nicht gefunden
+rlwrap: Command not found.
+/usr/local/vmd/lib/vmd/vmd_LINUXAMD64: /usr/lib/x86_64-linux-gnu/libGL.so.1: no version information available (required by /usr/local/vmd/lib/vmd/vmd_LINUXAMD64)
+/home/willy/RedoxChallenges/MutComp/./process.sh: Zeile 346: /home/willy/RedoxChallenges/MasterThesis/memoliModels/myVmdToys/Output021/021_pot.dx: Datei oder Verzeichnis nicht gefunden
+cp: Aufruf von stat für '/home/willy/RedoxChallenges/MasterThesis/memoliModels/myVmdToys/Output021/apbs.in' nicht möglich: Datei oder Verzeichnis nicht gefunden
+/home/willy/RedoxChallenges/MutComp/./process.sh: Zeile 346: /home/willy/RedoxChallenges/MasterThesis/memoliModels/myVmdToys/Output021/apbsUncorrected.in: Datei oder Verzeichnis nicht gefunden
+rlwrap: Command not found.
+/usr/local/vmd/lib/vmd/vmd_LINUXAMD64: /usr/lib/x86_64-linux-gnu/libGL.so.1: no version information available (required by /usr/local/vmd/lib/vmd/vmd_LINUXAMD64)
+rm: das Entfernen von '*overview.png*' ist nicht möglich: Datei oder Verzeichnis nicht gefunden

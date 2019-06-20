@@ -1,0 +1,11 @@
+#idim1(1) idim2(2) catim1(3) catim2(4) crap(5) crap(6) labpair[0,1](7) islearn[0,1](8)
+img001_15_15_0rotated_el img001_-15_15_0rotated_el 0 0 0 0 1 1
+img001_15_15_0rotated_el img001___rotated_el 0 0 0 0 1 1
+img001_-15_15_0rotated_el img001___rotated_el 0 0 0 0 1 1
+img002_15_15_0rotated_el img002_-15_15_0rotated_el 0 0 0 0 1 1
+img002_15_15_0rotated_el img002___rotated_el 0 0 0 0 1 1
+img002_-15_15_0rotated_el img002___rotated_el 0 0 0 0 1 1
+img001_15_15_0rotated_el img002_15_15_0rotated_el 0 0 0 0 1 0
+img001_-15_15_0rotated_el img002_-15_15_0rotated_el 0 0 0 0 1 0
+img001___rotated_el img002___rotated_el 0 0 0 0 1 0
+dummy img001_-15_15_0rotated_el 0 0 0 0 0 1

@@ -1,0 +1,51 @@
+# Started MutComprun
+# Sa. Mär. 10 12:28:47 2018
+#--------------------------------------------------
+repositoryPath = /home/willy/RedoxChallenges/MutComp/
+/home/willy/RedoxChallenges/MutComp/
+reading in parameters from /home/willy/RedoxChallenges/MutComp/GUI/Parameters/parameters.txt
+found the following parameters...
+parmameter          value
+-----------------------------------------------------------
+MutCompApbsReference              /home/willy/RedoxChallenges/MutComp/APBS/apbsReference.in
+MutCompCall              ./process
+MutCompError              /home/willy/RedoxChallenges/MutComp/GUI/Test/mutComp.err
+MutCompInputFolder              /home/willy/RedoxChallenges/MutComp/GUI/Test/Test/Input
+MutCompLog              /home/willy/RedoxChallenges/MutComp/GUI/Test/mutComp.log
+MutCompOutputFolder              /home/willy/RedoxChallenges/MutComp/GUI/Test/Test/Output
+MutCompPdbs              /home/willy/RedoxChallenges/MutComp/GUI/Test/Test/Input/pdb/
+MutCompPqrReference              /home/willy/RedoxChallenges/MutComp/mutationTest/ubqp.pdb
+MutCompPqrs              /home/willy/RedoxChallenges/MutComp/GUI/Test/Test/Input/pqr/
+MutCompViewPoints              /home/willy/RedoxChallenges/MutComp/ImageSimilarity/viewPoints.csv
+MutCompViewpoints              
+OutputFolder              /home/willy/RedoxChallenges/MutComp/GUI/Parameters/
+PathToMutComp              /home/willy/RedoxChallenges/MutComp/
+PathToVMD              /opt/vmd-1.9.3/
+VMDcall              ./vmd
+doCreateTrainingsSet              false
+doCreateTraininingsSet              true
+doImageCreator              true
+doMovieCreator              false
+doPdbToPqr              false
+doVMD              false
+parametersFile              /home/willy/RedoxChallenges/MutComp/GUI/Parameters/parameters.txt
+xRot              0
+xRotation              0
+xTrans              0
+yRot              0
+yRotation              0
+yTrans              0
+zRot              0
+zRotation              0
+zTrans              0
+skipping to convert pdb to pqr
+skipping vmd ...
+Compiling images in /home/willy/RedoxChallenges/MutComp/GUI/Test/Test/Output...
+2
+1
+000_Ars/
+007/
+compiled0.png
+compiled1.png
+skipping calling movieCreator ...
+skipping creating TraininingsSets ...

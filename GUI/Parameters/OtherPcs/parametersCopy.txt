@@ -1,0 +1,17 @@
+MutCompCall;./process
+MutCompError;/home/willy/RedoxChallenges/MutComp/GUI/Test/mutComp.err
+MutCompInputFolder;/home/willy/RedoxChallenges/MutComp/GUI/Test/Test/Input/
+MutCompLog;/home/willy/RedoxChallenges/MutComp/GUI/Test/mutComp.log
+MutCompOutputFolder;/home/willy/RedoxChallenges/MutComp/GUI/Test/Test/Output/
+MutCompPdbs;/home/willy/RedoxChallenges/MutComp/GUI/Test/Test/Input/pdb/
+MutCompPqrs;/home/willy/RedoxChallenges/MutComp/GUI/Test/Test/Input/pqr/
+OutputFolder;/home/willy/RedoxChallenges/MutComp/GUI/Parameters/
+PathToMutComp;/home/willy/RedoxChallenges/MutComp/
+PathToVMD;/opt/vmd-1.9.3/
+VMDcall;./vmd
+doCreateTrainingsSet;false
+doImageCreator;false
+doMovieCreator;false
+doPdbToPqr;false
+doVMD;true
+

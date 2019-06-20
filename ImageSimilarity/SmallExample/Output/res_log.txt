@@ -1,0 +1,10 @@
+Rand Seed=1
+Qtt of image pairs: Learn=7=6+,1- Test=3=3+,0-
+NTrees=5
+ Tree 0: nnodes=3 nleaves=2 Hleaves=0.343481+-0.343481 Depth=1+-0
+ Tree 1: nnodes=3 nleaves=2 Hleaves=0.343481+-0.343481 Depth=1+-0
+ Tree 2: nnodes=3 nleaves=2 Hleaves=0.299135+-0.299135 Depth=1+-0
+ Tree 3: nnodes=3 nleaves=2 Hleaves=0.330782+-0.330782 Depth=1+-0
+ Tree 4: nnodes=3 nleaves=2 Hleaves=0.338747+-0.338747 Depth=1+-0
+
+Unable to compute performance, test set does not contain pos and neg elements

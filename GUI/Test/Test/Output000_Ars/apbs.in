@@ -1,0 +1,29 @@
+read
+mol pqr /home/willy/RedoxChallenges/MutComp/GUI/Test/Test/Output000_Ars/000_Ars.pqr
+end
+elec
+  mg-auto
+  dime 129 129 129
+cglen 0 0 0
+  cgcent mol 1
+fglen 0 0 0
+  fgcent mol 1
+  mol 1
+  lpbe
+  bcfl sdh
+  srfm smol
+  chgm spl2
+  ion 1 0.150 2.0
+  ion -1 0.150 2.0
+  pdie  1.0
+  sdie  78.54
+  sdens  10.0
+  srad  1.4
+  swin  0.3
+  temp  298.15
+  gamma  0.105
+  calcenergy no
+  calcforce no
+write pot dx /home/willy/RedoxChallenges/MutComp/GUI/Test/Test/Output000_Ars/000_Ars_pot
+end
+quit

@@ -1,0 +1,29 @@
+read
+  mol pqr /home/sysgen/Documents/LWB/TCL/Script/M43/Output/1fov-01-M43A/1fov-01-M43A.pqr
+end
+elec
+  mg-auto
+  dime 129 129 129
+  cglen 110 130 95
+  cgcent mol 1
+  fglen 110 130 95
+  fgcent mol 1
+  mol 1
+  lpbe
+  bcfl sdh
+  srfm smol
+  chgm spl2
+  ion 1 0.150 2.0
+  ion -1 0.150 2.0
+  pdie  1.0
+  sdie  78.54
+  sdens  10.0
+  srad  1.4
+  swin  0.3
+  temp  298.15
+  gamma  0.105
+  calcenergy no
+  calcforce no
+  write pot dx /home/sysgen/Documents/LWB/TCL/Script/M43/Output/1fov-01-M43A/1fov-01-M43A_pot
+end
+quit
