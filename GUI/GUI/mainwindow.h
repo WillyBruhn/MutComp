@@ -25,6 +25,9 @@ public:
     void writeParametersToFile(const QString &fileName, std::map<QString,QString> &parameters);
     void readParametersFromFile(const QString &fileName, std::map<QString,QString> &parameters);
 
+    void readSettingsFromFile(const QString &fileName);
+    void writeSettingsToFile(const QString &fileName);
+
 
     void writeSystemOutputToFile(const QString &fileName, QProcess *process);
 
@@ -119,6 +122,8 @@ private:
 
     QString parametersFile;
     QString parametersPath;
+
+    QString settingsFile; // basically only contains the information, where to find the parametersFile
 
     QProcess* MutComp;
 

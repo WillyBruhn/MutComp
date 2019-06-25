@@ -3,7 +3,8 @@ A shell script for automized processing of pdb-files with vmd http://www.ks.uiuc
 
 ## Features:
 * pdb files are converted to pqr-files.
-* the electrostatics are calculated
+* the electrostatics are calculated (with VMD, using the amber force-field)
+* exports as wavefront-obj-files and as dx-files the electrostatic potential
 * creates one big picture containing the es,el,ss pictures of all the input molecules 
 * creates a gif containing all el -pictures
 
@@ -27,6 +28,13 @@ To run the example with you can do:
 the results will be stored in /M43Copy/Output.
 
 ![](/ImageCreator/overviewM43.png)
+# GUI
+In order to use the graphical-user-interface go to /GUI/build-GUI-Desktop-Debug/ and click on the executable *GUI*.
+
+![](/GUI/GUIimage.png)
+
+**parametersFile** pecifies the path to where the parametersFile *parameters.txt* can be found.
+
 
 
 # Ordering

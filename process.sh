@@ -98,6 +98,8 @@ columns=14
 
 MutCompLog=""
 
+vmdRC=""
+
 #----------------------------------------------------------------------------------------------------------
 # Check if vmd-path is correctly configured.
 # Abbort with error-message, if vmd is not under the specified path.
@@ -121,12 +123,14 @@ if [ ! -z "$1" ]; then
     parametersFile=$1
 fi
 
-
-
+echo "-----------------------------------------------------------"
+echo "This is ./process.sh"
+echo ""
 echo "reading in parameters from $parametersFile"
 
+echo ""
 echo "found the following parameters..."
-echo "parmameter          value"
+echo "parameter          value"
 echo "-----------------------------------------------------------"
 IFS=";"
 while read parameter value
@@ -193,6 +197,10 @@ do
 	
     if [ "$parameter" == "FontSize" ]; then
 		FontSize=$value
+	fi
+
+    if [ "$parameter" == "vmdRC" ]; then
+		vmdRC=$value
 	fi
 
 done < $parametersFile

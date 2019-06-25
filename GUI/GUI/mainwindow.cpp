@@ -52,11 +52,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     addParameter("MutCompViewPoints","/home/");
 
+    addParameter("vmdRC","/home/willy/vmd-1.9.4a31.bin.LINUXAMD64-CUDA9-OptiX600-RTX-OSPRay170.opengl/vmd-1.9.4a31/data/.vmdrc");
+
+
+
+
 //    addParameter("parametersFile","/home/willy/RedoxChallenges/MutComp/GUI/Parameters/parameters.txt");
 //    parametersFile = "../Parameters/parameters.txt";
 
+
     parametersFile = "parameters.txt";
     parametersPath = "/home/sysgen/Documents/LWB/TCL/MutComp/GUI/Parameters/";
+
+    settingsFile = QDir::currentPath() + "/settings.ini";
+
+    readSettingsFromFile(settingsFile);
+    writeSettingsToFile(settingsFile);
 
     ui->ParametersFileValue->setText(parametersPath+parametersFile);
 
@@ -207,7 +218,7 @@ void MainWindow::writeParametersToFile(const QString &fileName, std::map<QString
 
 
     QFile file( fileName );
-    if ( file.open(QIODevice::ReadWrite) )
+    if ( file.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text) )
     {
         QTextStream stream( &file );
 
@@ -223,6 +234,59 @@ void MainWindow::writeParametersToFile(const QString &fileName, std::map<QString
 void MainWindow::writeParametersToFile(const QString &fileName){
     writeParametersToFile(fileName, parameters);
 }
+
+
+
+void MainWindow::readSettingsFromFile(const QString &fileName){
+
+    qDebug() << "Reading settingsFile " << fileName << endl;
+
+    QFile file(fileName);
+    if(!file.open(QIODevice::ReadOnly)) {
+//        QMessageBox::information(0, "error", file.errorString());
+
+        qDebug() << "couldn't open parametersFile " << fileName << endl;
+    }
+
+    QTextStream in(&file);
+
+    while(!in.atEnd()) {
+        QString line = in.readLine();
+
+        if(line.isEmpty() == false){
+            QStringList fields = line.split(";");
+            qDebug() << fields[0] << fields[1] << endl;
+
+            parameters[fields[0]] = fields[1];
+
+            if(fields[0] == "parametersPath"){
+                parametersPath = fields[1];
+            }
+
+        }
+    }
+
+    file.close();
+}
+
+void MainWindow::writeSettingsToFile(const QString &fileName){
+
+    qDebug() << "writing settingsFile " << fileName << endl;
+
+    qDebug() << "parametersPath is " << parametersPath << endl;
+
+    QFile file( fileName );
+    if ( file.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text) )
+    {
+        QTextStream stream( &file );
+
+        stream << "parametersPath" << ";" << parametersPath;
+    }
+
+    file.close();
+}
+
+
 
 void MainWindow::readParametersFromFile(const QString &fileName, std::map<QString,QString> &parameters){
 
@@ -399,7 +463,7 @@ void MainWindow::on_Run_clicked()
 
 //    MutComp = new QProcess();
 
-    QString call = parameters["PathToMutComp"] + parameters["MutCompCall"];
+    QString call = parameters["PathToMutComp"] + parameters["MutCompCall"] + " " + parametersPath+parametersFile;
     qDebug() << call << endl;
     MutComp->start(call);
 
@@ -465,6 +529,10 @@ void MainWindow::on_ParametersFileButton_clicked()
     parametersPath = dir+"/";
 
     qDebug() << "ParametersFileValue clicked" << endl;
+
+
+
+    writeSettingsToFile(settingsFile);
 
     readParametersFromFile(parametersPath+parametersFile, parameters);
     writeParametersToFile(parametersPath+parametersFile);

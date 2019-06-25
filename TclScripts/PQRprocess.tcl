@@ -51,11 +51,7 @@ set trimmed [file rootname [file tail $currentMolecule]]
 # puts "loading from .vmdrc..."
 # source "$pathToRc/.vmdrc"
 
-set pathToRcBak "/home/sysgen"
-puts "loading from .vmdrc.bak..."
-source "$pathToRcBak/.vmdrc.bak"
 
-display resize 1175 1012
 # --------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------
 # color Display Background white
@@ -81,6 +77,10 @@ set viewPoints ""
 set xTrans 0
 set yTrans 0
 set zTrans 0
+
+set vmdRC "/home/sysgen/.vmdrc.bak"
+#source "$pathToRcBak/.vmdrc.bak"
+
 
 puts "-------------------------------------------"
 puts "reading parameters from $parametersFile ..."
@@ -127,6 +127,8 @@ foreach line $data {
 		set y_rot $value
 	} elseif {$parameter == "zRot"} {
 		set z_rot $value
+	}   elseif {$parameter == "vmdRC"} {
+		set vmdRC $value
 	}
 }
 
@@ -148,7 +150,14 @@ puts "xRot: $x_rot"
 puts "yRot: $y_rot"
 puts "zRot: $z_rot"
 
+puts "vmdRC: $vmdRC"
+
 puts "------------------------------------------------------------------------\n"
+
+puts "reading vmdRC"
+source "$vmdRC"
+display resize 1175 1012
+
 
 # --------------------------------------------------------------------------------------
 # Load pqr-file
