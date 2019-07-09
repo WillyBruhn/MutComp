@@ -100,6 +100,9 @@ MutCompLog=""
 
 vmdRC=""
 
+vmdRecalculate=0 # if 0 then it is checked for the dx-files, if it exists then the calculation for that protein
+# is aborted
+
 #----------------------------------------------------------------------------------------------------------
 # Check if vmd-path is correctly configured.
 # Abbort with error-message, if vmd is not under the specified path.
@@ -251,21 +254,36 @@ if [ "$doPdbToPqr" == "true" ]; then
 		[ -f "$i" ] || break
 		
 		filename="${i%.*}"
+
+        calcVMD=1
+
+        if [ $vmdRecalculate == 0 ]; then
+            if test -f "$pathToPqrs/$filename.pqr"; then
+                echo "$pathToPqrs/$filename.pqr exists"
+                calcVMD=0
+            fi
+        fi
+    
+        if [ $calcVMD == 1 ]; then
 	 
-		#pdb2pqr --ff amber $filename.pdb $pathToPqrs $filename.pqr
+		    #pdb2pqr --ff amber $filename.pdb $pathToPqrs $filename.pqr
 
-		pdb2pqr --ff amber $filename.pdb "$pathToPqrs/$filename.pqr" >> "$MutCompLog"
-	  
-	  
-	#     echo pdb2pqr --ff amber $inputFolder"pdb/"$filename.pdb $inputFolder"pqr/"$filename.pqr
+		    pdb2pqr --ff amber $filename.pdb "$pathToPqrs/$filename.pqr" >> "$MutCompLog"
+	      
+	      
+	    #     echo pdb2pqr --ff amber $inputFolder"pdb/"$filename.pdb $inputFolder"pqr/"$filename.pqr
 
-	#     pdb2pqr --ff amber 1fov-01-D34K.pdb /home/sysgen/Documents/LWB/TCL/Script/Input/pqr/1fov-01-D34K.pqr
+	    #     pdb2pqr --ff amber 1fov-01-D34K.pdb /home/sysgen/Documents/LWB/TCL/Script/Input/pqr/1fov-01-D34K.pqr
 
-	# pdb2pqr --ff amber /home/sysgen/Documents/LWB/TCL/Script/Input/pdb/1fov-01-D34K.pdb /home/sysgen/Documents/LWB/TCL/Script/Input/pqr/1fov-01-D34K.pqr
-		
-	done
+	    # pdb2pqr --ff amber /home/sysgen/Documents/LWB/TCL/Script/Input/pdb/1fov-01-D34K.pdb /home/sysgen/Documents/LWB/TCL/Script/Input/pqr/1fov-01-D34K.pqr
+    
+        fi
+		    
+    done
 
-	echo "...Done converting pdb2pqr"
+    echo "...Done converting pdb2pqr"
+
+        
 
 else 
 
@@ -303,167 +321,186 @@ if [ "$doVMD" == "true" ]; then
 		[ -f "$i" ] || break
 		
 		filename="${i%.*}"
-		mkdir "$OutputFolder/$filename/"
-		
-		# This is the apbs that is going to be written into
-		# outFileApbs=""
-		
-		# Read in the reference APBS-apbsParameters
-		# change some lines that specify the name of the molecule
-		# write the file in the newley created directory in "apbs.in"
-		# start apbs with this new parameters file
-		
-		# since we append all the lines on-the-fly, first make sure we have a new 
-		# file and don't append to an allready existing one
-		[ -e "$OutputFolder/$filename/apbs.in" ] && rm "$OutputFolder/$filename/apbs.in"
-		
-		# read in the reference
-		while read -r line
-		do
-		    # change the input filename accordingly
-		    if [[ $line == *"mol pqr"* ]]; then
-		        echo "Changed one line in $OutputFolder/$filename/apbs.in"
-		        line="mol pqr $OutputFolder/$filename/$filename.pqr"
+
+        p="_pot.dx" 
+
+        calcVMD=1
+
+        if [ $vmdRecalculate == 0 ]; then
+            if test -f "$OutputFolder/$filename/$filename$p"; then
+                echo "$OutputFolder/$filename/$filename$p exists"
+                calcVMD=0
+            fi
+        fi
+    
+        if [ $calcVMD == 1 ]; then
+
+		    mkdir "$OutputFolder/$filename/"
+		    
+		    # This is the apbs that is going to be written into
+		    # outFileApbs=""
+		    
+		    # Read in the reference APBS-apbsParameters
+		    # change some lines that specify the name of the molecule
+		    # write the file in the newley created directory in "apbs.in"
+		    # start apbs with this new parameters file
+		    
+		    # since we append all the lines on-the-fly, first make sure we have a new 
+		    # file and don't append to an allready existing one
+		    [ -e "$OutputFolder/$filename/apbs.in" ] && rm "$OutputFolder/$filename/apbs.in"
+		    
+		    # read in the reference
+		    while read -r line
+		    do
+		        # change the input filename accordingly
+		        if [[ $line == *"mol pqr"* ]]; then
+		            echo "Changed one line in $OutputFolder/$filename/apbs.in"
+		            line="mol pqr $OutputFolder/$filename/$filename.pqr"
+		        fi
+
+		        # change the output filename accordingly
+		        if [[ $line == *"write pot dx"* ]]; then
+		            echo "Changed one line in $OutputFolder/$filename/apbs.in"
+		            p="_pot"
+		            line="write pot dx $OutputFolder/$filename/$filename$p"
+		        fi
+		        
+		        
+		        echo $line >> "$OutputFolder/$filename/apbs.in"
+		    done < $apbsParametersReference
+		    
+		    echo "copied apbsReference from $apbsParametersReference to $OutputFolder/$filename/apbs.in"
+		    
+		    
+		    echo "Starting vmd..."
+		    echo "$PathToVMD$VMDcall $OutputFolder $PathToMutComp"
+		    if [ $pathToVmdExe == ""] 
+		    then
+		          vmd -startup $PathToMutComp/TclScripts/PQRprocess.tcl -args $parametersFile $i
+		    else
+		        $PathToVMD$VMDcall -startup $PathToMutComp/TclScripts/PQRprocess.tcl -args $parametersFile $i
 		    fi
 
-		    # change the output filename accordingly
-		    if [[ $line == *"write pot dx"* ]]; then
-		        echo "Changed one line in $OutputFolder/$filename/apbs.in"
-		        p="_pot"
-		        line="write pot dx $OutputFolder/$filename/$filename$p"
-		    fi
+        fi
 		    
-		    
-		    echo $line >> "$OutputFolder/$filename/apbs.in"
-		done < $apbsParametersReference
-		
-		echo "copied apbsReference from $apbsParametersReference to $OutputFolder/$filename/apbs.in"
-		
-		
-		echo "Starting vmd..."
-		echo "$PathToVMD$VMDcall $OutputFolder $PathToMutComp"
-		if [ $pathToVmdExe == ""] 
-		then
-		      vmd -startup $PathToMutComp/TclScripts/PQRprocess.tcl -args $parametersFile $i
-		else
-		    $PathToVMD$VMDcall -startup $PathToMutComp/TclScripts/PQRprocess.tcl -args $parametersFile $i
-		fi
-		
-	done
+    done
 
 	#----------------------------------------------------------------------------------------------------------
 	# Correct the boxes for each pqr
 	# TODO: do this on-the-fly
 	#----------------------------------------------------------------------------------------------------------
 	cd $pathToPqrs
-	for i in *.pqr; do
-		[ -f "$i" ] || break
-		
-		filename="${i%.*}"
 
-		# extract the box-size from the dx-file.
-		# We find the important lines by their number, so dont modify the dx-files!
-		
-	# # Data from 1.5
-	# # 
-	# # POTENTIAL (kT/e)
-	# # 
-	# # object 1 class gridpositions counts 129 129 129
-	# # origin 2.665251e+00 -3.124950e+01 -2.517100e+01
-	# # delta 4.090430e-01 0.000000e+00 0.000000e+00
-	# # delta 0.000000e+00 3.451172e-01 0.000000e+00
-	# # delta 0.000000e+00 0.000000e+00 3.810469e-01
-
-
-		deltaX=0
-		deltaY=0
-		deltaZ=0
-		
-		ext="_pot.dx"
-		
-		declare -i num=1
-		
-		while read -r line
-		do
-		    # change the input filename accordingly
+    if [ $vmdRecalculate == 1 ]; then
+	    for i in *.pqr; do
+		    [ -f "$i" ] || break
 		    
-		    arr=($line)
+		    filename="${i%.*}"
+
+		    # extract the box-size from the dx-file.
+		    # We find the important lines by their number, so don't modify the dx-files!
 		    
-		    if [ $num -eq 7 ]; then
-		        deltaX=${arr[1]}
-		        deltaX=`echo ${deltaX} | sed -e 's/[eE]+*/\\*10\\^/'`
-		    elif [ $num -eq 8 ]
+	    # # Data from 1.5
+	    # # 
+	    # # POTENTIAL (kT/e)
+	    # # 
+	    # # object 1 class gridpositions counts 129 129 129
+	    # # origin 2.665251e+00 -3.124950e+01 -2.517100e+01
+	    # # delta 4.090430e-01 0.000000e+00 0.000000e+00
+	    # # delta 0.000000e+00 3.451172e-01 0.000000e+00
+	    # # delta 0.000000e+00 0.000000e+00 3.810469e-01
+
+
+		    deltaX=0
+		    deltaY=0
+		    deltaZ=0
+		    
+		    ext="_pot.dx"
+		    
+		    declare -i num=1
+		    
+		    while read -r line
+		    do
+		        # change the input filename accordingly
+		        
+		        arr=($line)
+		        
+		        if [ $num -eq 7 ]; then
+		            deltaX=${arr[1]}
+		            deltaX=`echo ${deltaX} | sed -e 's/[eE]+*/\\*10\\^/'`
+		        elif [ $num -eq 8 ]
+		        then
+		            deltaY=${arr[2]}
+		            deltaY=`echo ${deltaY} | sed -e 's/[eE]+*/\\*10\\^/'`
+		        elif [ $num -eq 9 ]
+		        then
+		            deltaZ=${arr[3]}
+		            deltaZ=`echo ${deltaZ} | sed -e 's/[eE]+*/\\*10\\^/'`
+		        elif [ $num -gt 10 ]
+		        then
+		            break
+		        fi
+		        echo $num $line
+		        
+		        num=$num+1
+		    done < "$OutputFolder$filename/$filename$ext"
+		    
+		    echo $deltaX $deltaY $deltaZ
+		        
+		    scale=2
+		        
+		    boxX=$(bc -l <<< $deltaX*129*$scale)
+		    boxY=$(bc -l <<< $deltaY*129*$scale)
+		    boxZ=$(bc -l <<< $deltaZ*129*$scale)
+		    
+		    boxDim="$boxX $boxY $boxZ"
+		    
+		    echo "corrected boxDim: $boxDim"
+		    
+		    # This is the apbs that is going to be written into
+		    # outFileApbs=""
+		    
+		    # Read in the reference APBS-apbsParameters
+		    # change some lines that specify the name of the molecule
+		    # write the file in the newley created directory in "apbs.in"
+		    # start apbs with this new parameters file
+		    
+		    # since we append all the lines on-the-fly, first make sure we have a new 
+		    # file and don't append to an allready existing one
+		    
+		    cp "$OutputFolder$filename/apbs.in" "$OutputFolder$filename/apbsUncorrected.in"
+		    
+		    [ -e "$OutputFolder$filename/apbs.in" ] && rm "$OutputFolder$filename/apbs.in"
+		    
+		    # read in the reference
+		    while read -r line
+		    do
+		        # change the input filename accordingly
+		        if [[ $line == *"cglen"* ]]; then
+		            line="cglen $boxDim"
+		        fi
+
+		        if [[ $line == *"fglen"* ]]; then
+		            line="fglen $boxDim"
+		        fi
+		        
+		        echo $line >> "$OutputFolder$filename/apbs.in"
+		    done < "$OutputFolder$filename/apbsUncorrected.in"
+		    
+		    echo "copied apbsReference from $OutputFolder$filename/apbsUncorrected.in to $OutputFolder$filename/apbs.in"
+		    
+		    
+		    echo "Starting vmd..."
+		    if [ $pathToVmdExe == ""] 
 		    then
-		        deltaY=${arr[2]}
-		        deltaY=`echo ${deltaY} | sed -e 's/[eE]+*/\\*10\\^/'`
-		    elif [ $num -eq 9 ]
-		    then
-		        deltaZ=${arr[3]}
-		        deltaZ=`echo ${deltaZ} | sed -e 's/[eE]+*/\\*10\\^/'`
-		    elif [ $num -gt 10 ]
-		    then
-		        break
-		    fi
-		    echo $num $line
-		    
-		    num=$num+1
-		done < "$OutputFolder$filename/$filename$ext"
-		
-		echo $deltaX $deltaY $deltaZ
-		    
-		scale=2
-		    
-		boxX=$(bc -l <<< $deltaX*129*$scale)
-		boxY=$(bc -l <<< $deltaY*129*$scale)
-		boxZ=$(bc -l <<< $deltaZ*129*$scale)
-		
-		boxDim="$boxX $boxY $boxZ"
-		
-		echo "corrected boxDim: $boxDim"
-		
-		# This is the apbs that is going to be written into
-		# outFileApbs=""
-		
-		# Read in the reference APBS-apbsParameters
-		# change some lines that specify the name of the molecule
-		# write the file in the newley created directory in "apbs.in"
-		# start apbs with this new parameters file
-		
-		# since we append all the lines on-the-fly, first make sure we have a new 
-		# file and don't append to an allready existing one
-		
-		cp "$OutputFolder$filename/apbs.in" "$OutputFolder$filename/apbsUncorrected.in"
-		
-		[ -e "$OutputFolder$filename/apbs.in" ] && rm "$OutputFolder$filename/apbs.in"
-		
-		# read in the reference
-		while read -r line
-		do
-		    # change the input filename accordingly
-		    if [[ $line == *"cglen"* ]]; then
-		        line="cglen $boxDim"
-		    fi
-
-		    if [[ $line == *"fglen"* ]]; then
-		        line="fglen $boxDim"
+		          vmd -startup $PathToMutComp/TclScripts/PQRprocess.tcl -args $parametersFile $i
+		    else
+		        $PathToVMD$VMDcall -startup $PathToMutComp/TclScripts/PQRprocess.tcl -args $parametersFile $i
 		    fi
 		    
-		    echo $line >> "$OutputFolder$filename/apbs.in"
-		done < "$OutputFolder$filename/apbsUncorrected.in"
-		
-		echo "copied apbsReference from $OutputFolder$filename/apbsUncorrected.in to $OutputFolder$filename/apbs.in"
-		
-		
-		echo "Starting vmd..."
-		if [ $pathToVmdExe == ""] 
-		then
-		      vmd -startup $PathToMutComp/TclScripts/PQRprocess.tcl -args $parametersFile $i
-		else
-		    $PathToVMD$VMDcall -startup $PathToMutComp/TclScripts/PQRprocess.tcl -args $parametersFile $i
-		fi
-		
-	#     echo $pathToVmdExe./vmd -startup $pathToTclScript/PQRprocess.tcl -args $inputFolder $outputFolder $i 
-	done
+	    #     echo $pathToVmdExe./vmd -startup $pathToTclScript/PQRprocess.tcl -args $inputFolder $outputFolder $i 
+	    done
+    fi
 else
 	echo "skipping vmd ..."
 fi
